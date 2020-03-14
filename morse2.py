@@ -11,9 +11,10 @@ import json
 import sys
 
 try:
-    from morse import decode,encode
+    import morse
+    import ita2
 except:
-    print("读取模块 morse.py 失败！请将所有脚本放在同个文件夹里。")
+    print("读取模块失败！请将所有脚本放在同个文件夹里。")
     a = input("<已停止，请按任意键退出>")
     quit()
 
@@ -24,6 +25,8 @@ except:
     print("读取电码本文件 data.json 失败！请先运行 scraper.py 生成电码本。")
     a = input("<已停止，请按任意键退出>")
     quit()
+
+transcript_method = ita2 # or morse
 
 encode_table =  dict((y,x) for x,y in decode_table.items())
 
@@ -50,9 +53,12 @@ if __name__ == '__main__':
     else:
         intext = ' '.join(sys.argv[1:]).upper()
 
-    if all([i in '-. ' for i in intext]):
-        temptext = decode(intext)
+    if all([i in '-. 01' for i in intext]):
+        temptext = transcript_method.decode(intext)
         print("EN: ",temptext)
+
+        temptext = temptext.replace(" ","")
+
         if temptext.isalnum():
             # 每隔 4 个字符分割一下
             splited = [temptext[i*4:i*4+4] for i in range(len(temptext)// 4)]
@@ -64,7 +70,10 @@ if __name__ == '__main__':
                 pass
     else:
         if all([i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' for i in intext]):
-            print("EN: ",encode(intext))
+            print("EN: ",morse.encode(intext))
+        elif all([i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-@$!&#\'()"/:;?,.' for i in intext]):
+            print("EN: ",ita2.encode(intext))
         else:
             temptext = ''.join([encode_table[i] for i in intext])
-            print("CN: ",encode(temptext))
+
+            print("CN: ",transcript_method.encode(temptext))
