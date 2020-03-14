@@ -26,7 +26,13 @@ except:
     a = input("<已停止，请按任意键退出>")
     quit()
 
-transcript_method = ita2 # or morse
+
+# ------- --------- --------
+# 在这里修改你想要的编码方案，默认 morse，可选 ita2
+
+transcript_method = ita2 # morse
+
+# ------- --------- --------
 
 encode_table =  dict((y,x) for x,y in decode_table.items())
 
@@ -38,7 +44,6 @@ for i in range(26):
 for i in range(10):
     # 0 => 9960 兼容半角数字
     encode_table[str(i)] = str(9960+i)
-
 
 if __name__ == '__main__':
     if not sys.argv[1:]:
@@ -71,7 +76,7 @@ if __name__ == '__main__':
     else:
         if all([i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' for i in intext]):
             print("EN: ",morse.encode(intext))
-        elif all([i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-@$!&#\'()"/:;?,.' for i in intext]):
+        elif all([i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -@$!&#\'()"/:;?,.' for i in intext]):
             print("EN: ",ita2.encode(intext))
         else:
             temptext = ''.join([encode_table[i] for i in intext])

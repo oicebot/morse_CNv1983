@@ -87,7 +87,7 @@ def encode(instr="HTTP://"):
 
     instr = instr.upper()
 
-    outstr = "11111"
+    outstr = ""
 
     ls_stat = True  # True -> LTRS ; False -> FIGS
 
@@ -107,7 +107,7 @@ def encode(instr="HTTP://"):
         except KeyError:
             return '[ERROR] Unknown character %s in input string.' % char
 
-    return outstr
+    return outstr.replace("1","-").replace("0",".")
         
 
 

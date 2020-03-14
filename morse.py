@@ -11,7 +11,6 @@
     2017.01.09 init build
     2020.03.11 add python2 and 3 compatibility.
 """
-import time
 import sys
 
 decode_dict = { '.-'   : "A", '-...' : "B",

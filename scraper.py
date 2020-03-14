@@ -43,10 +43,16 @@ for item in result:
     else:
         data[text[:4]]=text[-1] # 最后一位是全角字符
 
-with open('data.json', 'w') as fp:
-    json.dump(data, fp, sort_keys=True, indent=4)
-
 # TODO: 这里其实有个 bug，原文中 9992 9993 9994 9995 有意义，
 #       但找不到对应的字符，所以我手动修改了一下 data.json。
+
+data["9932"] = " "  # 半角空格
+data["9992"]= "〚"  # 起始着重号
+data["9993"]= "〛"  # 末尾着重号)
+data["9994"]= "「"  # 起始专名号
+data["9995"]= "」"  # 末尾专名号
+
+with open('data.json', 'w') as fp:
+    json.dump(data, fp, sort_keys=True, indent=4)
 
 file.close()
